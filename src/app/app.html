@@ -1,0 +1,96 @@
+@if (!token) {
+
+  <h1>Todo Uygulaması</h1>
+
+  <div class="login-card">
+
+    <h2>Giriş Yap</h2>
+
+    <input
+      [(ngModel)]="username"
+      type="text"
+      placeholder="Kullanıcı Adı">
+
+    <br><br>
+
+    <input
+      [(ngModel)]="password"
+      type="password"
+      placeholder="Şifre">
+
+    <br><br>
+
+    <button (click)="login()">
+      Giriş Yap
+    </button>
+
+  </div>
+
+} @else {
+
+  <h1>Todo Listem</h1>
+
+  <h3 style="text-align:center; color:#6d28d9;">
+    Merhaba {{ loggedInUser }} 👋
+  </h3>
+
+  <p style="text-align:center;">
+    Toplam Görev: {{ todos.length }}
+  </p>
+
+  <div class="login-card">
+
+    <div style="margin-bottom:20px;">
+
+      <button class="logout-btn" (click)="logout()">
+        Çıkış Yap
+      </button>
+
+    </div>
+
+    <input
+      #todoInput
+      type="text"
+      placeholder="Yeni görev giriniz"
+      (keyup.enter)="addTodo(todoInput)">
+
+    <button (click)="addTodo(todoInput)">
+      Ekle
+    </button>
+
+    <br><br>
+
+    <ul>
+
+      @for (todo of todos; track todo.id) {
+
+        <li>
+
+          <strong
+            [class.completed]="todo.completed">
+
+            {{ todo.title }}
+
+          </strong>
+
+          <div class="todo-actions">
+
+            <button (click)="toggleTodo(todo)">
+              {{ todo.completed ? 'Tamamlanmadı Yap' : 'Tamamlandı Yap' }}
+            </button>
+
+            <button (click)="deleteTodo(todo.id)">
+              Sil
+            </button>
+
+          </div>
+
+        </li>
+
+      }
+
+    </ul>
+
+  </div>
+
+}
